@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Knowledge;
 
+use Illuminate\Support\Carbon;
+
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\KnowledgeEntry;
@@ -71,7 +73,42 @@ class KnowledgeApprovalController extends Controller
                 ->get(['id', 'name']);
         }
 
-        return view('site.innerPages.companyOwner.approvals', compact('entries', 'departments', 'managedDepartment'));
+        $baseStatsQuery = KnowledgeEntry::query()
+            ->where('company_id', $user->company_id);
+
+        if ($user->role === 'department_manager') {
+            // نفس منطق قسم المدير
+            $managedDepartment = $managedDepartment ?? Department::query()
+                ->where('company_id', $user->company_id)
+                ->where('manager_id', $user->id)
+                ->first();
+
+            abort_unless($managedDepartment, 403);
+
+            $baseStatsQuery->where('department_id', $managedDepartment->id);
+        }
+
+        $pendingCount = (clone $baseStatsQuery)->where('status', 'pending')->count();
+
+        $approvedThisMonth = (clone $baseStatsQuery)
+            ->where('status', 'approved')
+            ->whereBetween('approved_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->count();
+
+        $rejectedThisMonth = (clone $baseStatsQuery)
+            ->where('status', 'rejected')
+            ->whereBetween('rejected_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->count();
+
+
+        return view('site.innerPages.companyOwner.approvals', compact(
+            'entries',
+            'departments',
+            'managedDepartment',
+            'pendingCount',
+            'approvedThisMonth',
+            'rejectedThisMonth'
+        ));
     }
 
     public function details(KnowledgeEntry $entry)
@@ -96,7 +133,7 @@ class KnowledgeApprovalController extends Controller
         });
 
         // نرجّع HTML جاهز للمودال
-        $html = view('site.companyOwner.partials.approval_details_modal_body', [
+        $html = view('site.innerPages.companyOwner.partials.approval_details_modal_body', [
             'entry' => $entry,
             'attachments' => $attachments
         ])->render();

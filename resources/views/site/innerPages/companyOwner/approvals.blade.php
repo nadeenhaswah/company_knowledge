@@ -36,7 +36,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="stat-details">
-                        <h3>15</h3>
+                        <h3>{{ $pendingCount }}</h3>
                         <p>Pending Approval</p>
                     </div>
                 </div>
@@ -47,7 +47,8 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-details">
-                        <h3>42</h3>
+                        <h3>{{ $approvedThisMonth }}</h3>
+
                         <p>Approved This Month</p>
                     </div>
                 </div>
@@ -58,7 +59,8 @@
                         <i class="fas fa-times-circle"></i>
                     </div>
                     <div class="stat-details">
-                        <h3>3</h3>
+                        <h3>{{ $rejectedThisMonth }}</h3>
+
                         <p>Rejected This Month</p>
                     </div>
                 </div>
@@ -179,22 +181,7 @@
 
         </div>
 
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-4">
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+
     </div>
 
     <!-- Approve with Comment Modal -->
@@ -311,7 +298,7 @@
             modal.show();
 
             try {
-                const res = await fetch(`{{ url('/knowledge/approvals') }}/${id}/details`, {
+                const res = await fetch(`{{ url('/shared/approvals') }}/${id}/details`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }
