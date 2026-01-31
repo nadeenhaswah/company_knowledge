@@ -63,18 +63,16 @@
                         <i class="fas fa-chevron-down dropdown-arrow"></i>
                     </a>
                     <ul class="nav-dropdown">
-                        <li><a href="{{ route('companyOwner.knowledgeOverview') }}"><i class="fa-regular fa-eye"></i>
-                                Knowledge Overview</a></li>
-                        <li><a href="{{ route('companyOwner.onboardingKnowledge') }}"><i
-                                    class="fa-solid fa-clipboard-question"></i>
+                        {{-- <li><a href="{{ route('companyOwner.knowledgeOverview') }}"><i class="fa-regular fa-eye"></i>
+                                Knowledge Overview</a></li> --}}
+                        <li><a href="{{ route('shared.onboarding') }}"><i class="fa-solid fa-clipboard-question"></i>
                                 Onboarding Knowledge</a></li>
-                        <li><a href="{{ route('companyOwner.MistakesAndLessonsLearned') }}"><i
-                                    class="fa-solid fa-square-xmark"></i> Mistakes & Lessons Learned</a></li>
-                        <li><a href="{{ route('companyOwner.OperationalKnowledge') }}"><i
-                                    class="fa-solid fa-briefcase"></i>
+                        <li><a href="{{ route('shared.mistakes') }}"><i class="fa-solid fa-square-xmark"></i> Mistakes
+                                & Lessons Learned</a></li>
+                        <li><a href="{{ route('shared.operational') }}"><i class="fa-solid fa-briefcase"></i>
                                 Operational Knowledge</a></li>
-                        <li><a href="{{ route('companyOwner.CriticalAndStrategicKnowledge') }}"><i
-                                    class="fa-regular fa-chess-queen"></i> Critical & Strategic Knowledge</a></li>
+                        <li><a href="{{ route('shared.critical') }}"><i class="fa-regular fa-chess-queen"></i> Critical
+                                & Strategic Knowledge</a></li>
                     </ul>
                 </li>
                 <li class="nav-item {{ request()->routeIs('shared.approvals.index') ? 'active' : '' }}">
@@ -105,12 +103,12 @@
                         <span>Company News</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('companyOwner.settings') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('companyOwner.settings') ? 'active' : '' }}">
                     <a href="{{ route('companyOwner.settings') }}" class="nav-link">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
                     </a>
-                </li>
+                </li> --}}
             @endif
 
 
@@ -148,6 +146,53 @@
                         <i class="fas fa-newspaper"></i>
                         <span>Company News</span>
                     </a>
+                </li>
+
+                <li class="nav-item {{ request()->routeIs('shared.approvals.index') ? 'active' : '' }}">
+                    <a href="{{ route('shared.approvals.index') }}" class="nav-link">
+                        <i class="fas fa-calendar"></i>
+                        <span>Approvals</span>
+                    </a>
+                </li>
+
+                <li
+                    class="nav-item has-dropdown {{ request()->routeIs('companyOwner.knowledgeOverview', 'companyOwner.onboardingKnowledge', 'companyOwner.MistakesAndLessonsLearned', 'companyOwner.OperationalKnowledge', 'companyOwner.CriticalAndStrategicKnowledge') ? 'active' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Knowledge Center</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <ul class="nav-dropdown">
+                        <li><a href="{{ route('companyOwner.knowledgeOverview') }}"><i class="fa-regular fa-eye"></i>
+                                Knowledge Overview</a></li>
+                        <li><a href="{{ route('companyOwner.onboardingKnowledge') }}"><i
+                                    class="fa-solid fa-clipboard-question"></i>
+                                Onboarding Knowledge</a></li>
+                        <li><a href="{{ route('companyOwner.MistakesAndLessonsLearned') }}"><i
+                                    class="fa-solid fa-square-xmark"></i> Mistakes & Lessons Learned</a></li>
+                        <li><a href="{{ route('companyOwner.OperationalKnowledge') }}"><i
+                                    class="fa-solid fa-briefcase"></i>
+                                Operational Knowledge</a></li>
+                        <li><a href="{{ route('companyOwner.CriticalAndStrategicKnowledge') }}"><i
+                                    class="fa-regular fa-chess-queen"></i> Critical & Strategic Knowledge</a></li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-dropdown {{ request()->routeIs('companyOwner.companyCalendar', 'companyOwner.departmentsCalendars') ? 'active' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Calendar</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <ul class="nav-dropdown">
+                        <li><a href="{{ route('companyOwner.companyCalendar') }}"><i
+                                    class="fa-solid fa-calendar-days"></i>
+                                Company Calendar</a></li>
+                        <li><a href="{{ route('companyOwner.departmentsCalendars') }}"><i
+                                    class="fa-solid fa-calendar-day"></i>
+                                Departments Calendars</a></li>
+                    </ul>
                 </li>
             @endif
 

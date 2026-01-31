@@ -9,6 +9,7 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\CompanyOwner\CompanyProfileController;
 use App\Http\Controllers\CompanyOwner\DepartmentController as OwnerDepartmentController;
 use App\Http\Controllers\Knowledge\KnowledgeApprovalController;
+use App\Http\Controllers\Knowledge\KnowledgeBrowseController;
 use App\Http\Controllers\Knowledge\KnowledgeController;
 use App\Http\Controllers\Knowledge\MyContributionsController;
 use App\Http\Controllers\Shared\UserController as SharedUserController;
@@ -112,22 +113,22 @@ Route::middleware(['auth', 'role:company_owner'])->prefix('company-owner')->name
         return view('site.innerPages.companyOwner.knowledgeOverview');
     })->name('knowledgeOverview');
 
-    Route::get('/onboardingKnowledge', function () {
-        return view('site.innerPages.companyOwner.onboardingKnowledge');
-    })->name('onboardingKnowledge');
+    // Route::get('/onboardingKnowledge', function () {
+    //     return view('site.innerPages.companyOwner.onboardingKnowledge');
+    // })->name('onboardingKnowledge');
 
 
-    Route::get('/MistakesAndLessonsLearned', function () {
-        return view('site.innerPages.companyOwner.MistakesAndLessonsLearned');
-    })->name('MistakesAndLessonsLearned');
+    // Route::get('/MistakesAndLessonsLearned', function () {
+    //     return view('site.innerPages.companyOwner.MistakesAndLessonsLearned');
+    // })->name('MistakesAndLessonsLearned');
 
-    Route::get('/OperationalKnowledge', function () {
-        return view('site.innerPages.companyOwner.OperationalKnowledge');
-    })->name('OperationalKnowledge');
+    // Route::get('/OperationalKnowledge', function () {
+    //     return view('site.innerPages.companyOwner.OperationalKnowledge');
+    // })->name('OperationalKnowledge');
 
-    Route::get('/CriticalAndStrategicKnowledge', function () {
-        return view('site.innerPages.companyOwner.CriticalAndStrategicKnowledge');
-    })->name('CriticalAndStrategicKnowledge');
+    // Route::get('/CriticalAndStrategicKnowledge', function () {
+    //     return view('site.innerPages.companyOwner.CriticalAndStrategicKnowledge');
+    // })->name('CriticalAndStrategicKnowledge');
 
     // Route::get('/approvals', function () {
     //     return view('site.innerPages.companyOwner.approvals');
@@ -191,6 +192,19 @@ Route::middleware(['auth', 'role:department_manager,company_owner,employee'])->p
 
     Route::post('/approvals/bulk-approve', [KnowledgeApprovalController::class, 'bulkApprove'])
         ->name('approvals.bulkApprove');
+
+
+
+    Route::get('/onboarding', [KnowledgeBrowseController::class, 'onboarding'])->name('onboarding');
+    Route::get('/mistakes', [KnowledgeBrowseController::class, 'mistakes'])->name('mistakes');
+    Route::get('/operational', [KnowledgeBrowseController::class, 'operational'])->name('operational');
+    Route::get('/critical', [KnowledgeBrowseController::class, 'critical'])->name('critical');
+    Route::get('/critical/{entry}/details', [KnowledgeBrowseController::class, 'criticalDetails'])
+        ->name('criticalDetails');
+
+    Route::get('/mistakes', [KnowledgeBrowseController::class, 'mistakes'])->name('mistakes');
+    Route::get('/mistakes/{entry}/details', [KnowledgeBrowseController::class, 'mistakesDetails'])
+        ->name('mistakesDetails');
 });
 
 
