@@ -194,6 +194,28 @@
                                 Departments Calendars</a></li>
                     </ul>
                 </li>
+                <li
+                    class="nav-item has-dropdown {{ request()->routeIs('companyOwner.knowledgeOverview', 'companyOwner.onboardingKnowledge', 'companyOwner.MistakesAndLessonsLearned', 'companyOwner.OperationalKnowledge', 'companyOwner.CriticalAndStrategicKnowledge') ? 'active' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Knowledge Center</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <ul class="nav-dropdown">
+                        {{-- <li><a href="{{ route('companyOwner.knowledgeOverview') }}"><i class="fa-regular fa-eye"></i>
+                                Knowledge Overview</a></li> --}}
+                        <li><a href="{{ route('shared.onboarding') }}"><i class="fa-solid fa-clipboard-question"></i>
+                                Onboarding Knowledge</a></li>
+                        <li><a href="{{ route('shared.mistakes') }}"><i class="fa-solid fa-square-xmark"></i>
+                                Mistakes
+                                & Lessons Learned</a></li>
+                        <li><a href="{{ route('shared.operational') }}"><i class="fa-solid fa-briefcase"></i>
+                                Operational Knowledge</a></li>
+                        <li><a href="{{ route('shared.critical') }}"><i class="fa-regular fa-chess-queen"></i>
+                                Critical
+                                & Strategic Knowledge</a></li>
+                    </ul>
+                </li>
             @endif
 
 
@@ -217,19 +239,26 @@
                     </a>
                 </li>
 
-
-                <li class="nav-item has-dropdown">
+                <li
+                    class="nav-item has-dropdown {{ request()->routeIs('companyOwner.knowledgeOverview', 'companyOwner.onboardingKnowledge', 'companyOwner.MistakesAndLessonsLearned', 'companyOwner.OperationalKnowledge', 'companyOwner.CriticalAndStrategicKnowledge') ? 'active' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-layer-group"></i>
                         <span>Knowledge Center</span>
                         <i class="fas fa-chevron-down dropdown-arrow"></i>
                     </a>
                     <ul class="nav-dropdown">
-                        <li><a href="#"><i class="fas fa-user-tie"></i> Knowledge Overview</a></li>
-                        <li><a href="#"><i class="fas fa-user-plus"></i> Onboarding Knowledge</a></li>
-                        <li><a href="#"><i class="fas fa-user-plus"></i> Mistakes & Lessons Learned</a></li>
-                        <li><a href="#"><i class="fas fa-user-plus"></i> Operational Knowledge</a></li>
-                        <li><a href="#"><i class="fas fa-user-plus"></i> Critical & Strategic Knowledge</a></li>
+                        {{-- <li><a href="{{ route('companyOwner.knowledgeOverview') }}"><i class="fa-regular fa-eye"></i>
+                                Knowledge Overview</a></li> --}}
+                        <li><a href="{{ route('shared.onboarding') }}"><i class="fa-solid fa-clipboard-question"></i>
+                                Onboarding Knowledge</a></li>
+                        <li><a href="{{ route('shared.mistakes') }}"><i class="fa-solid fa-square-xmark"></i>
+                                Mistakes
+                                & Lessons Learned</a></li>
+                        <li><a href="{{ route('shared.operational') }}"><i class="fa-solid fa-briefcase"></i>
+                                Operational Knowledge</a></li>
+                        <li><a href="{{ route('shared.critical') }}"><i class="fa-regular fa-chess-queen"></i>
+                                Critical
+                                & Strategic Knowledge</a></li>
                     </ul>
                 </li>
             @endif
@@ -318,6 +347,7 @@
     @if (Route::is('employee*'))
         <div class="sidebar-menu">
             <ul class="nav-menu">
+                
                 <li class="nav-item active">
                     <a href="{{ route('employee.index') }}" class="nav-link">
                         <i class="fas fa-home"></i>

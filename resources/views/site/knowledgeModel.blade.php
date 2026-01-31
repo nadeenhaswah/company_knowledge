@@ -168,7 +168,7 @@
                         and see how they create real impact in real contexts.
                     </p>
                     <div class="col-xl-3 cta-btn-container text-center">
-                        <a class="cta-btn align-middle" href="{{route('site.loging.login')}}">Get Started</a>
+                        <a class="cta-btn align-middle" href="{{ route('login.create') }}">Get Started</a>
                     </div>
                 </div>
 

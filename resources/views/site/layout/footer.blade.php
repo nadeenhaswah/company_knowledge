@@ -28,7 +28,7 @@
             <!-- About / Contact -->
             <div class="col-lg-4 col-md-6 footer-about">
                 <a href="#home" class="d-flex align-items-center">
-                    <span class="sitename">Arsha</span>
+                    <span class="sitename">Knowledge-Hub</span>
                 </a>
                 <div class="footer-contact pt-3">
                     <p>A108 Adam Street</p>

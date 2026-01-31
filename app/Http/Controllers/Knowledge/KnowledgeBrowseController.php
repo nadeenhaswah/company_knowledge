@@ -193,4 +193,90 @@ class KnowledgeBrowseController extends Controller
             'html' => $html,
         ]);
     }
+
+    public function onboardingDetails(KnowledgeEntry $entry)
+    {
+        $user = Auth::user();
+
+        abort_unless($user->company_id, 403);
+        abort_unless($entry->company_id === $user->company_id, 403);
+        abort_unless($entry->status === 'approved', 403);
+        abort_unless($entry->type === 'onboarding', 403);
+
+        // scoping حسب الدور
+        if ($user->role === 'department_manager') {
+            $managedDepartmentId = Department::where('company_id', $user->company_id)
+                ->where('manager_id', $user->id)
+                ->value('id');
+
+            abort_unless($managedDepartmentId, 403);
+            abort_unless($entry->department_id === $managedDepartmentId, 403);
+        } elseif ($user->role !== 'company_owner') {
+            abort_unless($user->department_id, 403);
+            abort_unless($entry->department_id === $user->department_id, 403);
+        }
+
+        $entry->load(['author:id,name', 'department:id,name', 'attachments', 'tags:id,name']);
+
+        $attachments = $entry->attachments->map(function ($att) {
+            return [
+                'type' => $att->type,
+                'original_name' => $att->original_name,
+                'url' => $att->path ? Storage::disk('public')->url($att->path) : null,
+            ];
+        });
+
+        $html = view('site.innerPages.companyOwner.partials.onboarding_details_modal_body', [
+            'entry' => $entry,
+            'attachments' => $attachments,
+        ])->render();
+
+        return response()->json(['ok' => true, 'html' => $html]);
+    }
+
+    public function operationalDetails(KnowledgeEntry $entry)
+{
+    $user = Auth::user();
+
+    // ✅ نفس الشركة + approved + النوع operational
+    abort_unless($user->company_id && $entry->company_id === $user->company_id, 403);
+    abort_unless($entry->status === 'approved', 403);
+    abort_unless($entry->type === 'operational', 403);
+
+    // ✅ scope حسب الدور
+    if ($user->role === 'department_manager') {
+        $managedDepartment = Department::query()
+            ->where('company_id', $user->company_id)
+            ->where('manager_id', $user->id)
+            ->first();
+
+        abort_unless($managedDepartment, 403);
+        abort_unless($entry->department_id === $managedDepartment->id, 403);
+
+    } elseif ($user->role !== 'company_owner') {
+        abort_unless($user->department_id, 403);
+        abort_unless($entry->department_id === $user->department_id, 403);
+    }
+
+    $entry->load(['author:id,name', 'department:id,name', 'tags:id,name', 'attachments']);
+
+    // ✅ تجهيز attachments (زي mistakes)
+    $attachments = $entry->attachments->map(function ($att) {
+        return [
+            'type' => $att->type,
+            'original_name' => $att->original_name,
+            'url' => $att->path ? Storage::disk('public')->url($att->path) : null,
+            'size' => $att->size ?? null,
+            'mime' => $att->mime ?? null,
+        ];
+    })->toArray();
+
+    $html = view('site.innerPages.companyOwner.partials.operational_details_modal_body', [
+        'entry' => $entry,
+        'attachments' => $attachments,
+    ])->render();
+
+    return response()->json(['ok' => true, 'html' => $html]);
+}
+
 }

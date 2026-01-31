@@ -1,4 +1,8 @@
  <!-- Header -->
+ @php
+     $user = Auth::user();
+ @endphp
+
  <header class="main-header">
      <div class="header-left">
          <button class="sidebar-toggle" id="sidebarToggle">
@@ -12,7 +16,7 @@
 
      <div class="header-right">
          <!-- Messages -->
-         <div class="header-item dropdown">
+         {{-- <div class="header-item dropdown">
              <a href="#" class="header-link" data-bs-toggle="dropdown">
                  <i class="fas fa-envelope"></i>
                  <span class="badge">3</span>
@@ -38,10 +42,10 @@
                      <a href="#">View all messages</a>
                  </div>
              </div>
-         </div>
+         </div> --}}
 
          <!-- Notifications -->
-         <div class="header-item dropdown">
+         {{-- <div class="header-item dropdown">
              <a href="#" class="header-link" data-bs-toggle="dropdown">
                  <i class="fas fa-bell"></i>
                  <span class="badge">4</span>
@@ -65,31 +69,33 @@
                      <a href="#">View all notifications</a>
                  </div>
              </div>
-         </div>
+         </div> --}}
 
          <!-- User Profile -->
          <div class="header-item dropdown">
              <a href="#" class="header-user" data-bs-toggle="dropdown">
-                 <img src="https://ui-avatars.com/api/?name=Admin+User" alt="Admin">
+                 <img src="{{ $user->avatar }}" alt="{{ $user->name }}">
                  <div class="user-info">
                      <span class="user-greeting">Hi,</span>
-                     <span class="user-name">Admin</span>
+                     <span class="user-name">{{ $user->name }}</span>
                  </div>
              </a>
+
              <div class="dropdown-menu dropdown-menu-end">
                  <div class="dropdown-header user-header">
-                     <img src="https://ui-avatars.com/api/?name=Admin+User" alt="Admin">
+                     <img src="{{ $user->avatar }}" alt="{{ $user->name }}">
                      <div>
-                         <h6>Admin User</h6>
-                         <p>admin@company.com</p>
+                         <h6>{{ $user->name }}</h6>
+                         <p>{{ $user->email }}</p>
                      </div>
                  </div>
-                 <a href="{{ route('companyOwner.profile') }}" class="dropdown-item">
+
+                 {{-- <a href="{{ route('companyOwner.profile') }}" class="dropdown-item">
                      <i class="fas fa-user"></i> My Profile
                  </a>
                  <a href="#" class="dropdown-item">
                      <i class="fas fa-cog"></i> Settings
-                 </a>
+                 </a> --}}
                  <div class="dropdown-divider"></div>
                  {{-- <a href="#" class="dropdown-item text-danger">
                      <i class="fas fa-sign-out-alt"></i> Logout

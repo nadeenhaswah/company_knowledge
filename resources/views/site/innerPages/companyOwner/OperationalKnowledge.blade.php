@@ -88,9 +88,11 @@
                     <div class="knowledge-card-footer">
                         <span class="status-badge status-active">Approved</span>
                         <div class="card-actions">
-                            <a href="#" class="btn btn-sm btn-outline-primary">
+                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                onclick="openOperationalDetails({{ $entry->id }})">
                                 <i class="fas fa-eye me-1"></i> View
-                            </a>
+                            </button>
+
                         </div>
                     </div>
 
@@ -108,4 +110,60 @@
 
 
     </div>
+
+    <!-- Operational Details Modal -->
+<div class="modal fade" id="operationalDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-eye me-2"></i> Operational Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="operationalDetailsBody">
+                <div class="text-center text-muted py-4">Loading...</div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+@section('js')
+<script>
+    async function openOperationalDetails(id) {
+        const modalEl = document.getElementById('operationalDetailsModal');
+        const bodyEl  = document.getElementById('operationalDetailsBody');
+
+        bodyEl.innerHTML = `<div class="text-center text-muted py-4">Loading...</div>`;
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+
+        // ✅ route() + replace لضمان URL صحيح
+        const url = `{{ route('shared.operationalDetails', ['entry' => '__ID__']) }}`.replace('__ID__', id);
+
+        try {
+            const res = await fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            const data = await res.json();
+            if (!data.ok) throw new Error(data.message || 'Failed');
+
+            bodyEl.innerHTML = data.html;
+
+        } catch (e) {
+            bodyEl.innerHTML = `
+                <div class="alert alert-danger mb-0">
+                    Failed to load details. (${e.message})
+                </div>
+            `;
+        }
+    }
+</script>
 @endsection

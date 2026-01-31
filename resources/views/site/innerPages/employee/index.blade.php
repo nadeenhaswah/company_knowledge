@@ -22,7 +22,7 @@
                         <div class="status-indicator"></div>
                     </div>
                     <div class="welcome-info">
-                        <h2>Welcome back, Mohammad! 👋</h2>
+                        <h2>Welcome back 👋</h2>
                         <p>Here's what's happening with your contributions today</p>
                         <div class="employee-meta">
                             <span><i class="fas fa-building me-2"></i> IT Department</span>

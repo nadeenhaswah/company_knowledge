@@ -205,6 +205,14 @@ Route::middleware(['auth', 'role:department_manager,company_owner,employee'])->p
     Route::get('/mistakes', [KnowledgeBrowseController::class, 'mistakes'])->name('mistakes');
     Route::get('/mistakes/{entry}/details', [KnowledgeBrowseController::class, 'mistakesDetails'])
         ->name('mistakesDetails');
+
+    Route::get('/onboarding/{entry}/details', [KnowledgeBrowseController::class, 'onboardingDetails'])
+    ->name('onboardingDetails');
+
+    Route::get('/operational/{entry}/details', [KnowledgeBrowseController::class, 'operationalDetails'])
+    ->name('operationalDetails');
+
+
 });
 
 
